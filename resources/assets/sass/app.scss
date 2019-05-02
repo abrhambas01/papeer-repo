@@ -1,0 +1,19 @@
+@tailwind preflight;
+
+@import "components/buttons";
+
+#mainMenu { 
+	@apply .max-w-app-container .min-h-full .m-auto .flex-col .justify-between;
+}
+
+.article-feeds {
+	@apply .bg-grey-lightest .w-3/5 .p-6 .mb-2 .mt-2 .rounded-sm .shadow-md .ml-2;
+}
+
+
+.active { 
+	@apply .text-blue ; 
+}
+
+
+@tailwind utilities;

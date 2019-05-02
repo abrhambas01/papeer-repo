@@ -1,0 +1,11 @@
+.is-rounded { 
+	@apply .bg-blue ; 
+}
+
+.row {
+	display: flex;
+}
+
+.column {
+	flex: 50%;
+}

@@ -1,0 +1,39 @@
+users
+
+ - id 
+ - account_type ( 1 or 0 ) -> premium or free.
+ - role_id
+ - full_name
+ - username
+ - email
+ - password
+ - timestamps
+ - confirmed_at
+ - confirmation_code
+
+
+schools 
+- id
+- name
+- description
+- timestamps( created_at / updated_at)
+
+
+papers 
+- id
+- posted_by
+- title
+- abstract
+- attachment
+- timestamps( created_at / updated_at)
+
+paper_activities
+
+
+
+
+
+
+
+
+
