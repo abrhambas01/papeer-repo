@@ -1,4 +1,4 @@
-## This is the startup repo
+https://github.com/abrhambas01/papeer-repo.git## This is the startup repo
 
 ### Tools Used / Prerequisites
 
@@ -16,8 +16,8 @@
 1. clone the project by typing this commands in the terminal..
 
 ```
-$ git clone https://github.com/abrhambas01/project_schub.git 
-$ cd project_schub && composer install && npm install
+$ git clone https://github.com/abrhambas01/papeer-repo.git 
+$ cd papeer-repo && composer install && npm install
 $ php artisan key:generate
 ``` 
 
