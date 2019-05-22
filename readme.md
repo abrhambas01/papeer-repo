@@ -58,7 +58,7 @@ $ php artisan key:generate && composer dump-autoload
 
 ```
 
-Run the project with php artisan serve from the terminal... or the pretty urls can also be used. like poppl.test or poppl.dev depending on your configuration.
+Run the project with php artisan serve from the terminal... or the pretty urls can also be used. like app.test or app.dev depending on your configuration.
 
 
 
