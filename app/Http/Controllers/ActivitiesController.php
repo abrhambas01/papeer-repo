@@ -6,5 +6,9 @@ use Illuminate\Http\Request;
 
 class ActivitiesController extends Controller
 {
-    
+	public function returnActivities()
+	{
+
+
+	}
 }

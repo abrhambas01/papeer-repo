@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 use Auth ; 
 use Overtrue\LaravelFollow\Traits\CanBeFollowed;
 use Overtrue\LaravelFollow\Traits\CanBeLiked ;
+use Illuminate\Http\Request ; 
 
 class Paper extends Model {
 
@@ -24,27 +25,50 @@ class Paper extends Model {
 
 
 
+  public function deletePaper()
+  {
+
+  }
+
+
+  public function student()
+  {
+    return $this->belongsTo(Student::class,'user_id','id');
+  }
+
+
+
   public function getActivitiesCountAttribute()
   {
     return $this->with('activityCreators')->count(); 
   }
 
-  // this one's working now..
-  
-  // tracks activities for every users in papers.
-  public function activityCreators()
+  /**
+ * get all activities for the paper
+ *
+ * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+ */
+  public function activities()
   {
-
-    return $this->belongsToMany(User::class,
-      'paper_activities',
-      'paper_id',
-      'creator_id')
-    ->withPivot('display_name','body','status')
-    ->withTimestamps() ;
+// morphMany(MorphedModel, morphableName, type = able_type, relatedKeyName = able_id, localKey = id)
+    return $this->morphToMany(Activity::class, 'activityable');
   }
 
-  /*success here.*/
-  public function activityTypes()
+  // this one's working but we're not using this many to many relationships since** it's more easy to just use polymorphic relationships..
+  // tracks activities for every users in papers.
+ /* public function activityCreators()
+  {
+
+    return $this->belongsToMany(User::class,'paper_activities',
+      'paper_id',
+      'creator_id')
+    ->withPivot('id','display_name','body','status')
+    ->withTimestamps();
+  }*/
+
+
+  // success here.
+/*  public function activityTypes()
   {
     return $this->belongsToMany(ActivityType::class,
       'paper_activities',
@@ -52,29 +76,36 @@ class Paper extends Model {
       'activity_type_id')
     ->withPivot('creator_id','display_name','body','status')
     ->withTimestamps() ;
+  }*/
+
+
+  public function setPublisherNameAttrbute()
+  {
+    return $this->publisher->full_name ; 
   }
+
   
   /**
    * Paper belongs to many Activities.
    *
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */
-  public function activities()
+ /* public function activities()
   {
     // belongsTo(RelatedModel, foreignKey = activities_id, keyOnRelatedModel = id)
     return $this->belongsToMany(PaperActivity::class , 'paper_activities','paper_id','id')
     ->withPivot('display_name','body','status');
-  }
+  }*/
   
 
 
 
-  public static function returnsUserId(){
+  public static function returnsLoggedOnUsersId(){
     return Auth::id() ;
   }
 
   // When using this -> papers model would return only entries that are what's inside the query automatically .
-  protected static function boot()
+  /*protected static function boot()
   {
 
     parent::boot();
@@ -84,12 +115,12 @@ class Paper extends Model {
     });
 
   }
+*/
 
 
-
-  public function getLikeCountAttribute()
+  public function setLikeCountAttribute()
   {
-      // we'll refer from this doc in the laravel-follow package.
+      // we'll refer from this doc in the laravel-follow package
     return auth()->user()->likes(Paper::class)->count();
   }
 
@@ -125,7 +156,7 @@ class Paper extends Model {
   }
 
 
-  public function totalLikes()
+  public function totalLikes()  
   {
     return $this->sum('likesCount');
   }
@@ -134,7 +165,7 @@ class Paper extends Model {
   public static function postedByUser($user)
   {
     return static::where('posted_by','=',$user);
-  }     
+  }       
 
   public static function notFromTheLoggedOnUser($user)
   {
@@ -210,22 +241,45 @@ class Paper extends Model {
   }
 
 
-  public static function publish($request)
+
+  /**
+   * Paper morphs many Photo.
+   *
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function photos()
   {
-    $publishPaper =  $this->firstOrCreate([
-      'posted_by'             => auth()->id(),
-      'title'                 => $request->get('research_title'),
-      'research_description'  => $request->get('research_description'),
-      'abstract'              => $request->get('abstract'),
-      'school_id'             => $request->get("school_id"),
+    // morphMany(MorphedModel, morphableName, type = imageable_type, relatedKeyName = imageable_id, localKey = id)
+    return $this->morphMany(Photo::class, 'imageable');
+  }
+
+  public static function publish(Request $requestData)
+  {
+    $paper =   auth()->user()->papers()->create(['posted_by' => auth()->id(),
+      'title'                 => $requestData->get('research_title'),
+      'research_description'  => $requestData->get('research_description'),
+      'abstract'              => $requestData->get('abstract'),
+      'school_id'             => $requestData->get("school_id"),
       'likeCount'             => 0 ,
       'followersCount'        => 0,
-      'attachment'            => $request->get()->file('attachment')->store('papers', 'public'),
-      'attachment_link'       => $request->get("attachment_link")
+      'attachment'            => $requestData->file('attachment')->store('papers', 'public'),
+      'attachment_url'       =>  $requestData->get("attachment_link")
     ]);
 
+    $fileInfo = pathinfo($paper->attachment);
 
-    $this->recordPublishActivity($publishPaper); 
+    $fileName = $fileInfo['basename'];
+
+    $paper->photos()->create([
+      'image_file' => $fileName , 
+      'imageable_id' => $paper->id, 
+      'imageable_type' => 'App\Paper'
+    ]);
+
+    return $paper ; 
+
+  // we can record this published activity..                    
+  //  $this->recordPublishActivity($publishPaper); 
 
 
   }

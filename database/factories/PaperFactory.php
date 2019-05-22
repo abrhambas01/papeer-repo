@@ -4,15 +4,10 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Paper::class, function (Faker $faker) {
 	$storageDir = storage_path()."\app\public\attachments" ;
-	
 	$targetDir = storage_path()."\app\public\papers" ;
-	
-	$students = \App\User::where("role_id",1)->pluck('id')->toArray();
-	
+	$students = \App\User::students()->pluck('id')->toArray();
 	$schools = \App\School::pluck('id')->toArray();
-
 	$schoolArray = array_random($schools);
-	
 	$studentArray = array_random($students);
 
 	$attachmentLocation = $faker->file($storageDir, $targetDir , true); 
@@ -35,6 +30,11 @@ $factory->define(App\Paper::class, function (Faker $faker) {
 	];
 });
 
+$factory->define(App\Photo::class, function(Faker $faker ) { 
+
+
+}); 
+
 $factory->define(App\PaperActivity::class, function (Faker $faker) {
 	$paperId = Paper::pluck('id')->toArray();
 	$creatorId = User::pluck('id')->toArray();		
@@ -46,7 +46,7 @@ $factory->define(App\PaperActivity::class, function (Faker $faker) {
 		'activityTypeId' => $activityTypeId
 	]);
 
-	dd($actId);
+	dd($actId);	
 
 	return [
 		'paper_id' 			=> array_random($paperId),

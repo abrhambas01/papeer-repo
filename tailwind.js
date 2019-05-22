@@ -938,11 +938,18 @@ modules: {
 */
 
 plugins: [
+
 // require('./plugins/container')({
 //     // center: true,
 //     // padding: '1rem',
 //   }),
-],
+
+
+require('tailwindcss-plugins/pagination')({
+  color: colors['teal-dark'],
+}),
+
+] ,
 
 
 /*

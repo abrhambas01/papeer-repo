@@ -1,7 +1,7 @@
 function checkIfUserHasLikedThePaper(paperId) {
 	console.log("checkIfUserHasLikedThePaper starts");
 }
-
+	
 
 function likePaper(paperId,userId) {
 	let paperLikesCount = {{ $paper->likesCount }} ;

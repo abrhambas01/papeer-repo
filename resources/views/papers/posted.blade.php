@@ -28,7 +28,7 @@
 
 			<div id="user-actions">
 				<div class="flex">
-					<svg id="deleteButton" class="h-4 text-red fill-current w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
+					<svg id="deleteButton" data-id="{{  $paper->id }}" class="h-4 text-red fill-current w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"/>
 					</svg>
 				</div>
 			</div>
@@ -52,19 +52,49 @@
 
 <script>
 
-	$(function(){
+	$('svg#deleteButton').on('click',function (e){
+		var id = $(this).data('id');
+		
+		deletePaper(id) ; 
 
-		var paper  = '{{  $paper }}';
-
-		console.log(paper);
 	});
 
-	$('#user-actions').find('svg#deleteButton').on('click',function (e){
-		var this = $(this);
+	function deletePaper(id) {
+		let paperId =  id ; 
+		
+		let urlDelete = '{{ route('papers.delete') }}' ; 
 
-		console.log(paper);
-		console.log(this);
-	});
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			$.ajax({
+				url: urlDelete,	
+				type: 'DELETE',
+				data: { 
+					id : id, 
+					_token: $('input[name=_token]').val(),
+				},
+				success : function (data){
+					console.log(data);
+					// console.log(urlDelete);
+					if (result.value) {
+						Swal.fire('Deleted!','Your file has been deleted.','success')
+					}
+				},
+				error :function (xhr,res){
+					console.log(xhr);
+				}
+			})
+		})
+	}
+
+
 </script>
 
 @endsection

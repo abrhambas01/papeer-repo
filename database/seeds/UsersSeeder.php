@@ -44,7 +44,8 @@ class UsersSeeder extends Seeder
     } 
 
     public function seedNonStudents($noOfUsers){
-    	$faker = \Faker\Factory::create();
+    	
+        $faker = \Faker\Factory::create();
 
     	for ($i=0; $i <= $noOfUsers ; $i++) { 
     		factory(App\User::class)->create([
@@ -55,7 +56,8 @@ class UsersSeeder extends Seeder
 	        	'remember_token' => str_random(10),
 	        	// 'confirmed_at ' => null
            ]);
-        }    
+        }
+
     }
 
 

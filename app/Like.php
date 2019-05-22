@@ -17,3 +17,4 @@ class Like extends Model
 		return $this->belongsToMany(Paper::class,'like_paper')->withTimeStamp('liked_on');
 	}
 }
+ 	

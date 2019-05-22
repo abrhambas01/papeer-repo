@@ -15,8 +15,7 @@ class RoleSeeder extends Seeder
     {
         // Role::query()->delete();
 
-        Role::truncate();
-        
+        Role::truncate();    
 
     	Role::firstOrCreate([
     		'title'   => 'Students',

@@ -17,8 +17,6 @@ $(function() {
 		}
 	});
 
-
-
 	$(document).ready(function(){
 		$('meta[name="viewport"]').prop('content', 'width=1440');
 	});
@@ -68,22 +66,32 @@ $(function() {
 			contentType: false,
 			processData: false,
 		}).done(function(data, status ,xhr) {
-			// console.log("XHR" +data);
-			console.log("Data"+data);
-			console.log("status"+status);
+
+			if ( xhr.status === 201){
+				alert(data.Data);
+				document.location.replace('/papers/'+data.Paper.id)
+			}
+
+			else if ( xhr.status === 500){
+				Swal(data,"500","Internal Error");
+			}
+
+			else if ( xhr.status == 422){
+				alert("There are incomplete fields");
+			}
+
 		}).fail(function (xhr,textStatus){
-			// Swal(textStatus,xhr.responseJSON.message,'warning');
-			alert(xhr.responseJSON.message);
-			// Swal(xhr.responseJSON.message);
-			document.location.replace('/papers');
-			console.log("Request failed:" +textStatus );
+			if ( xhr.statusCode == 422){
+				Swal(data,"422","There was an error processing your request consider checking your inputs");
+				document.location.replace('/papers/create');		
+			}
 		});
 
 		
 
 
 
-/*		We have the user functoin here
+/*		We have the user function.. here
 		function err(xhr, reason, ex) {
 			if (xhr.status = 500) {
 				alert("500 Error");
@@ -95,7 +103,7 @@ $(function() {
 			}
 		}
 
-*/		
+		*/		
 	});
 
 });

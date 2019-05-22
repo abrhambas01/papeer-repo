@@ -1,11 +1,11 @@
-<?php 
-namespace App\Http\Controllers\Paper;
+<?php namespace App\Http\Controllers\Paper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Paper ; 
 use App\School ; 
 use App\User ;
 use DB ; 
+use App\utilities\Uploads ;    
 
 class PapersController extends Controller
 {
@@ -16,7 +16,7 @@ class PapersController extends Controller
     */
     public function index()
     {
-        $papers = Paper::latest()->paginate(5);
+        $papers = Paper::latest()->paginate(8);
         return view('papers.index',compact("papers"));
     }
 
@@ -43,13 +43,15 @@ class PapersController extends Controller
 // https://docs.google.com/document/d/1i6Ta9OLy8LyDH5CGDOU54Q8eC1TZ3bb6rmB34Yp_oxM/edit
 
     // validate the request..
-        $this->validate(request(), [
+        $req = $this->validate(request(), [
             'research_title'                 => 'required|max:40|min:3',
             'research_description'           => 'required|min:15|max:100',
             'abstract'                       => 'required',
             'school_id'                      => 'required|numeric',
+            'banner_picture'                 => 'required|mimes:jpeg,png',
             'attachment'                     => 'required|mimes:pdf,doc',
         ]);
+
 
         $userId = auth()->user()->id ; 
 
@@ -59,25 +61,31 @@ class PapersController extends Controller
         $account_type  = auth()->user()
                                ->where("id",$userId)
                                ->value('account_type');
-                               
+
+
+        // dd(request());
         // if he has a standard user / student / free account
         if ($account_type === "0") {
-            if ( $papersCount < 2 ) {
-               // paper can now be published and also record the activity of that user...
-                $paper =  Paper::publish(request());
-                // dd($paper);  
+            if ( $papersCount < 3 ) {
+                if (is_array($req)){
+                    // paper can now be published and also record the activity of that user...
 
-                $response = "Your paper has been published and is ready to be reviewed by the community.";
-                
-                return response($response, 201);
+
+                    $paper = Paper::publish(request());
+
+                    $response = "Your paper has been published and is ready to be reviewed by the community.";
+
+                    return response(['Data' =>$response,'Paper'=> $paper], 201);
+                }
+                else { 
+                    return response("not",500);
+                }
 
 
                 // return response()->json(['response' => $response,201]) ; 
             }
             else { 
-
                 $response = "You are not allowed to publish more papers, please upgrade your account";
-                
                 abort(403, $response);
                 // return response()->json(['response' => $response,403]) ; 
                 // return response()->json($response, 403);
@@ -86,11 +94,11 @@ class PapersController extends Controller
         // he's a paid user..
         else {
       // just publish the paper.. automatically
-              $res = Paper::publish(request()); 
-              return response($res, 201);
-        }
+          $res = Paper::publish(request()); 
+          return response($res, 201);
+      }
 
-    }
+  }
 
     /**
     * Display the specified resource.
@@ -100,7 +108,7 @@ class PapersController extends Controller
     */
     public function show($id)
     {
-        $paper = Paper::findOrFail($id);
+        $paper = Paper::with('photos')->findOrFail($id);
         return view('papers.show', ['paper' => $paper]);
     }
 
@@ -108,14 +116,15 @@ class PapersController extends Controller
     /**
     * Show the form for editing the specified resource.
     *
-    * @param  int  $id
+* @param  int  $id
     * @return \Illuminate\Http\Response
     */
-    public function edit($id)
-    {
-        $user = Paper::fromCurrentUser()->findOrFail($id);
-        return view('papers.edit',['user' => $user]);
-    }
+public function edit($id)
+{
+    $user = Paper::fromCurrentUser()->findOrFail($id);
+    return view('papers.edit',['user' => $user]);
+
+}
 
 
     /**
@@ -139,10 +148,11 @@ class PapersController extends Controller
     * @param  int  $id
     * @return \Illuminate\Http\Response
     */
-    public function destroy($id)
+    public function destroy(Paper $paper)
     {
-        $paper = Paper::findOrFail($paper);
 
+        $deleteStatus = $paper->delete();
+        return response($deleteStatus);
     }
 
 
@@ -160,9 +170,8 @@ class PapersController extends Controller
     /*Show the posted papers of the logged on user*/
     public function postedPapers($user)
     {
-
         $postedPapers = Paper::postedByUser($user)->get() ; 
-
+     
         return view("papers.posted",[
             'papers' => $postedPapers
         ]);
@@ -176,8 +185,16 @@ class PapersController extends Controller
         return view("papers.followed",[
             'papers' => $postedPapers
         ]);
-    
+
     }
+
+    public function deletePaper()
+    {
+        $paperId = request()->get('id');
+
+        return response()->json($paperId);
+    }
+
 
     public function recommendPapers($paper)
     {

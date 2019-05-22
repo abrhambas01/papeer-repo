@@ -1,7 +1,7 @@
 <div class="bg-white-2 shadow" id="studentMenu">
 	<div class="flex px-4 ml-8 py-4 pb-4 pt-4 font-display">
 		<svg xmlns="http://www.w3.org/2000/svg" class="fill-current text-grey-darkest h-6 w-6 ml-4 mr-2" viewBox="0 0 20 20"><path d="M8 20H3V10H0L10 0l10 10h-3v10h-5v-6H8v6z"/></svg>
-		<a href="{{ route('home') }}" class="mr-8 text-2xl no-underline font-normal text-grey-darkest font-display">Home</a>
+		<a href="{{ url('/') }}" class="mr-8 text-2xl no-underline font-normal text-grey-darkest font-display">Home</a>
 
 		<svg class="fill-current text-grey-darkest h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M0 3h20v2H0V3zm0 4h20v2H0V7zm0 4h20v2H0v-2zm0 4h20v2H0v-2z"/>
 		</svg>
@@ -16,7 +16,7 @@
 		<svg class="fill-current text-grey-darkest h-6 w-6 mr-2"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 480H48c-26.51 0-48-21.49-48-48V80c0-26.51 21.49-48 48-48h416c26.51 0 48 21.49 48 48v352c0 26.51-21.49 48-48 48zM128 120c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zm0 96c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zm0 96c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zm288-136v-32c0-6.627-5.373-12-12-12H204c-6.627 0-12 5.373-12 12v32c0 6.627 5.373 12 12 12h200c6.627 0 12-5.373 12-12zm0 96v-32c0-6.627-5.373-12-12-12H204c-6.627 0-12 5.373-12 12v32c0 6.627 5.373 12 12 12h200c6.627 0 12-5.373 12-12zm0 96v-32c0-6.627-5.373-12-12-12H204c-6.627 0-12 5.373-12 12v32c0 6.627 5.373 12 12 12h200c6.627 0 12-5.373 12-12z"/></svg>
 
 	
-		<a href="{{ route('activity') }}" class="mr-2 no-underline text-2xl font-normal text-grey-darkest font-display">Activities <em class="text-blue">({{ $activityCount }})</em>
+		<a href="{{ route('activity') }}" class="mr-2 no-underline text-2xl font-normal text-grey-darkest font-display">Activities <em class="text-blue">(Static)</em>
 		</a>
 		{{-- <div class="bg-blue p-2 rounded-full text-white mr-4 ">3</div> --}}
 		{{-- {{ $paper->activitiesCount }} --}}

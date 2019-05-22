@@ -18,13 +18,24 @@ class School extends Model
 		return $this->hasMany(Paper::class);
 	}
 
+    /**
+     * School morphs many Photo.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function photos()
+    {
+        // morphMany(MorphedModel, morphableName, type = imageable_type, relatedKeyName = imageable_id, localKey = id)
+        return $this->morphMany(Photo::class, 'imageable');
+    }
+
 
 
 	/*
 	A school has many students and each student has many papers.
 	What if we want to get a school's list of papers -> that's has many through..
 
-  schools
+ 	schools
         id - integer
         display_name - string
         motto - string
@@ -43,13 +54,8 @@ class School extends Model
 	*/
 
 
-	// public function schoolsPapers()
-	// {
-	// 	return $this->hasManyThrough(
-	// 		Paper::class, 
-	// 		Student::class,
-	// 		''
-	// 	);
-	// }
+        public function schoolsPapers(){
+           return $this->hasManyThrough(Paper::class, Student::class);
+       }
 
-}
+   }

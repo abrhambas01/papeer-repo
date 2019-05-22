@@ -18,13 +18,9 @@ class AuthController extends Controller
 			'pin' => 'required|string',
 			'password' => 'required|string',
 		]);
-
 		$pin = request()->get('pin');
-		
 		$field = filter_var(request()->get('pin'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
 		$remember_me = request()->get('remember');
-		
 		$password = request()->get('password');
 
 				// if (Auth::attempt([$field => $field,'password' => $password], $remember_me)){
@@ -75,8 +71,8 @@ class AuthController extends Controller
         		]) ;
 		}
 
-	// maybe in the future implement this..
-
+		// in the future implement email verification
+		// this..    
      	// $this->sendVerificationEmail($user->email, $user->confirmation_token); 
 
 		return redirect()->to("login")

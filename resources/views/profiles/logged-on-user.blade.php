@@ -18,7 +18,7 @@
 			<h3 class="text-grey-darker text-3xl">{{ auth()->user()->full_name }}</h3>
 
 			<p class="text-black text-3xl">{{  $profileUser->email }} </p>
-			<p>{{  $profileUser->username }}</p>
+			<p class="mt-4 text-2xl">{{  $profileUser->username }}</p>
 		</div>
 	</div>
 </div>

@@ -71,7 +71,7 @@
 				<div class="relative">
 					<select name="school_id" class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-grey" id="grid-state">
 						@foreach($schools as $school)
-							<option value="{{  $school->id }}">{{ $school->name }}</option>
+						<option value="{{  $school->id }}">{{ $school->name }}</option>
 						@endforeach
 					</select>
 					<div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
@@ -80,6 +80,17 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="flex flex-wrap -mx-3 mb-6 mt-4">
+			<div class="w-full md:w-3/4 px-3 mb-6 md:mb-0">
+				<label class="block w-full uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
+					<p class="w-full">Upload a banner photo</p>
+				</label>
+				<input id="banner_picture" name="banner_picture" type="file">
+			</div>
+		</div>
+
 
 		<div class="flex flex-wrap -mx-3 mb-6 mt-4">
 			<div class="w-full md:w-3/4 px-3 mb-6 md:mb-0">
@@ -102,18 +113,18 @@
 
 
 		@if ($errors->any())
-			<div class="container">
-				<div class="bg-color-error p-3 mb-4">
-					<h2 class="text-white mb-2">
-						There {{ $errors->count() == 1 ? 'is' : 'are' }} {{ $errors->count() }} {{ str_plural('error', $errors->count() )}} with this input
-					</h2>
-					<ul class="bullet-list text-white">
-						@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-						@endforeach
-					</ul>
-				</div>
+		<div class="container">
+			<div class="bg-color-error p-3 mb-4">
+				<h2 class="text-white mb-2">
+					There {{ $errors->count() == 1 ? 'is' : 'are' }} {{ $errors->count() }} {{ str_plural('error', $errors->count() )}} with this input
+				</h2>
+				<ul class="bullet-list text-white">
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</ul>
 			</div>
+		</div>
 		@endif
 
 		<div class="flex flex-wrap mb-1">

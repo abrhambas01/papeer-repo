@@ -3,6 +3,7 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+
 class CommentIndexQuery
 {
     /** @var Request */
@@ -15,34 +16,7 @@ class CommentIndexQuery
             $this->getPined($user)
         );
     }
-    protected function getNotPined(User $user): Paginator
-    {
-        $itemsPerPage       = $this->request->get('itemsPerPage', 20);
-        $filterBySearchTerm = $this->request->get('filterBySearchTerm', "");
-        $filterByAccount    = $this->request->get('filterByAccount', 0);
-        $hideSelfComments   = $this->request->hideSelfComments == 'true' ? true : false;
-        // beware! megaQuery is coming!..
-        return $user->comments()
-                    ->with('replies')       
-                    ->wherePined(false)
-                    ->where('reply_to_comment_id', null)
-                    ->when($filterByAccount, function ($q) use ($filterByAccount) {
-                        $q->where('account_id', $filterByAccount);
-                    })
-                    ->when($filterBySearchTerm, function ($q) use ($filterBySearchTerm) {
-                        // group this two conditions together (... AND ...)
-                        // something like SELECT ... WHERE account_id = 1 AND (text like '%test%' OR commenter_name like '%test%') AND ...
-                        $q->where(function ($inner_query) use ($filterBySearchTerm) {
-                            $inner_query->where('text', 'like', "%$filterBySearchTerm%")
-                                        ->orWhere('commenter_name', 'like', "%$filterBySearchTerm%");
-                        });
-                    })
-                    ->when($hideSelfComments === true, function ($q) use ($user) {
-                        $self_acc_ids = $user->accounts()->select(['insta_user_id'])->get()->pluck('insta_user_id');
-                        $q->whereNotIn('commenter_id', $self_acc_ids);
-                    })
-                    ->paginate($itemsPerPage);
-    }
+ 
     protected function getPined(User $user): Collection
     {
         return $user->comments()

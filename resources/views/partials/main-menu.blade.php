@@ -2,9 +2,9 @@
 $id = auth()->user()->id 
 ?>
 
-@includeWhen(auth()->user()->isStudent() === true, 'partials.main-menu.students')
+@includeWhen(auth()->user()->isStudent() == true, 'partials.main-menu.students')
 
-@includeWhen(auth()->user()->isStudent() === false, 'partials.main-menu.non-students', ['id' => $id])
+@includeWhen(auth()->user()->isStudent() == false, 'partials.main-menu.non-students', ['id' => $id])
 
 
 {{-- @component('main-menu')

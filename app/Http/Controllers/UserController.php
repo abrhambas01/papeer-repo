@@ -26,10 +26,9 @@ class UserController extends Controller
     // dd(auth()->user()->papers()->count());
   }
 
-  public function returnsValueIfUserMadeAnActivity($paper){
-    
+  public function returnsValueIfUserMadeAnActivity($paper){    
    $activityId = request('activityId');
-
+   
    $likeCount = PaperActivity::where([
     ['creator_id','=', Auth::id()],
     ['paper_id','=', $paper],
@@ -61,8 +60,6 @@ class UserController extends Controller
   ])->count();
 
 */   return response($status, 201);
-
-
 
 }
 

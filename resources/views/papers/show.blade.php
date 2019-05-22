@@ -19,16 +19,18 @@ pointer-events: none;
 
 @section('content')
 
+
 @includeWhen(auth()->check(),'partials.header')
 
 @includeWhen(auth()->check(), 'partials.main-menu')
 
-<div style="margin-left:6.9rem">
-	<h3 class="mt-4 mb-4 font-sans">{{  $paper->title  }}'s from <a href="/school" class="no-underline text-blue roman">{{  $paper->school->name }}</a></h3>
+<div style="margin-left:6.9rem">	
+	<h3 class="mt-4 mb-4 font-sans">{{  $paper->title  }}'s from <a href="/school" class="no-underline text-blue roman">{{  $paper->school->name }}</a>
+	</h3>
 	<article class="article-feeds mb-4">	
 		<div class="flex ml-4" id="papersInformation">	
 			<div class="flex-1">
-				<a href="#" class="text-blue-dark no-underline"><h3 class="mt-4 font-basic text-2xl font-black">{{  $paper->title  }} by {{   $paper->publisher->full_name }}
+			<a href="#" class="text-blue-dark no-underline"><h3 class="mt-4 font-basic text-2xl font-black">{{  $paper->title  }} by {{   $paper->publisher->full_name }}
 				</h3>
 			</a>
 			<p class="mt-4 mb-2 text-normal font-bold font-sans">{{  $paper->research_description }}</em></p>
@@ -66,7 +68,9 @@ pointer-events: none;
 
 	<p class="text-normal mt-3 ml-2 font-normal font-display mr-2" id="likeText">Like</p>
 
-	<em class="font-bold roman likesCount">{{  $paper->likeCount }}</em>
+	<em class="font-bold roman likesCount">
+		{{  $paper->likeCount }}
+	</em>
 
 	@if (!auth()->user()->isStudent())
 
@@ -146,6 +150,13 @@ pointer-events: none;
 
 @endif
 
+@foreach ($paper->photos as $photo)
+
+<img class="h-4 w-4" src="{{ asset('app/public/papers/photos/'.$photo->image_file ) }}" alt="">
+
+@endforeach
+
+
 </div>
 
 
@@ -155,8 +166,8 @@ pointer-events: none;
 <script src="{{ asset('js/jquery-modal.min.js') }}"></script>
 
 <script>
-	$(() => {
 
+	$(() => {
 // $('#recommendPaperModal').hide();
 // $('#requestCollaborationModal').hide();
 
@@ -185,11 +196,11 @@ abstractIsHTML(paperAbstract);
 // return isHTML("<div>p</div>")
 
 function abstractIsHTML(paperAbstract) {
-	// console.log(paperAbstract);
+// console.log(paperAbstract);
 
-	let isHTML = RegExp.prototype.test.bind(/(<([^>]+)>)/i);
-	
-	console.log(isHTML(paperAbstract));
+let isHTML = RegExp.prototype.test.bind(/(<([^>]+)>)/i);
+
+console.log(isHTML(paperAbstract));
 }
 
 
@@ -219,10 +230,10 @@ $("form#recommendPaperModal").on("submit",function (evt){
 		alert("Please fill the fields properly..");
 	}
 	else { 
-		// var formData = $(this).serializeArray();
-		var formData = $(this).serializeArray();
-		startActivity(formData, activityIdRecommend);
-	}	
+// var formData = $(this).serializeArray();
+var formData = $(this).serializeArray();
+startActivity(formData, activityIdRecommend);
+}	
 });
 
 
@@ -231,9 +242,9 @@ $("form#requestCollaborationModal").on("submit",function (evt){
 
 	let displayName = $("#display_name").val(); 
 	let recommendation = $("#note").val() ;
-	
+
 	console.log(displayName); 
-	
+
 	console.log(recommendation); 
 
 	if ( displayName === '' || recommendation === ''){
@@ -302,14 +313,14 @@ $("#recommendPaperModal").modal(ModalEffect);
 			}, 
 		}).done(function(data, status ,xhr) {
 			if ( data == 1){
-		// alert("add the like class");
-		$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
-		$("#likeText").text("Liked");
-	}
-	else { 
-		$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
-		$("#likeText").text("Like");
-	}
+// alert("add the like class");
+$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
+$("#likeText").text("Liked");
+}
+else { 
+	$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
+	$("#likeText").text("Like");
+}
 }).fail(function (xhr,textStatus){
 	if ( xhr.status === 500){
 		console.log("It's not allowed sir");
@@ -323,7 +334,7 @@ $("#recommendPaperModal").modal(ModalEffect);
 
 
 function followPaper(paperId, userId, activityId) {
-	let paperLikesCount = {{ $paper->likeCount }} ;
+	// let paperLikesCount = '{{ $paper->likeCount }}' ;
 	let likePaperUrl = '{{ route('papers.like',$paper->id) }}';
 
 	$.ajax({
@@ -338,212 +349,212 @@ function followPaper(paperId, userId, activityId) {
 	.done(function(data, status ,xhr) {
 		console.log("Data.."+data);
 /*
-			if ( data.likeStatus == 1 ){
-				$("em.likesCount").text(data.likesCount);
-				$("#likeText").text("Liked");
-				$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
-			}*/
+if ( data.likeStatus == 1 ){
+	$("em.likesCount").text(data.likesCount);
+	$("#likeText").text("Liked");
+	$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
+}*/
 
-			
+
 /*
 
-	else {
-			// let newLikeCount = paperLikesCount + 1  ;
-			$("em.likesCount").text(data.unlikeCount);
-			$("#likeText").text("Like");
-			$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
-		}*/
+else {
+// let newLikeCount = paperLikesCount + 1  ;
+$("em.likesCount").text(data.unlikeCount);
+$("#likeText").text("Like");
+$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
+}*/
 
-		if ( data == 0 ) { 
-			console.log("Data attached:"+data.attached);
-				// issue a liked
-				$("em.likesCount").text(data.likesCount);
-				$("#likeText").text("Like").removeClass('font-bold');
-				$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
+if ( data == 0 ) { 
+	console.log("Data attached:"+data.attached);
+	// issue a liked
+	$("em.likesCount").text(data.likesCount);
+	$("#likeText").text("Like").removeClass('font-bold');
+	$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
 
-			} 
-			else {
+} 
+else {
 
-				$("em.likesCount").text(data.likesCount);
+	$("em.likesCount").text(data.likesCount);
 
-				$("#likeText").text("Liked").addClass("font-bold");
+	$("#likeText").text("Liked").addClass("font-bold");
 
-				$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
+	$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
 
-				console.log(data);
-			}
-
-
-		}).fail(function (data,xhr,textStatus){
-			if ( xhr.status = 500){
-				console.log("There's an error");
-			}
-			if ( xhr.status = 403){
-				var dataStats = data.status ; 
-				Swal('403',data.statusText,'warning');
-				console.log(data);
-			}
-		}); 
+	console.log(data);
+}
 
 
+}).fail(function (data,xhr,textStatus){
+	if ( xhr.status = 500){
+		console.log("There's an error");
 	}
-
-
-	function likePaper(paperId,userId,activityId) {
-		let paperLikesCount = '{{ $paper->likeCount }}' ;
-		let likePaperUrl = '{{ route('papers.like', $paper->id) }}';
-
-		$.ajax({
-			method : 'POST' ,
-			url : likePaperUrl ,
-			data : { 
-				userId, 
-				paperId,
-				activityId
-			}, 
-		})
-		.done(function(data, status ,xhr) {
-			console.log("Data.."+data);
-/*
-			if ( data.likeStatus == 1 ){
-				$("em.likesCount").text(data.likesCount);
-				$("#likeText").text("Liked");
-				$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
-			}*/
-
-			
-/*
-
-	else {
-			// let newLikeCount = paperLikesCount + 1  ;
-			$("em.likesCount").text(data.unlikeCount);
-			$("#likeText").text("Like");
-			$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
-		}*/
-
-		if ( data == 0 ) { 
-			console.log("Data attached:"+data.attached);
-				// issue a liked
-				$("em.likesCount").text(data.likesCount);
-				$("#likeText").text("Like").removeClass('font-bold');
-				$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
-
-			} 
-			else {
-				$("em.likesCount").text(data.likesCount);
-				$("#likeText").text("Liked").addClass("font-bold");
-				$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
-				console.log(data);
-			}
-		}).fail(function (data,xhr,textStatus){
-			if ( xhr.status = 500){
-				console.log("There's an error");
-			}
-			if ( xhr.status = 403){
-				var dataStats = data.status ; 
-				Swal('403',data.statusText,'warning');
-				console.log(data);
-			}
-		}); 
-
+	if ( xhr.status = 403){
+		var dataStats = data.status ; 
+		Swal('403',data.statusText,'warning');
+		console.log(data);
 	}
+}); 
 
 
-	function startActivity(requestData,activityId){
+}
 
-		let uri = '{{ route('papers.activity', $paper->id) }}';	
 
-		$.ajax({
+function likePaper(paperId,userId,activityId) {
+	// let paperLikesCount = '{{ $paper->likesCount }}' ;
+	let likePaperUrl = '{{ route('papers.like', $paper->id) }}';
 
-			method : 'POST' ,
-			url : uri ,
-			data : {
-				requestData, 
-				activityId
-			},
-			success : function(data) {
-				console.log(data);
-				$.modal.close();
+	$.ajax({
+		method : 'POST' ,
+		url : likePaperUrl ,
+		data : { 
+			userId, 
+			paperId,
+			activityId
+		}, 
+	})
+	.done(function(data, status ,xhr) {
+		console.log("Data.."+data);
+/*
+if ( data.likeStatus == 1 ){
+	$("em.likesCount").text(data.likesCount);
+	$("#likeText").text("Liked");
+	$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
+}*/
 
-				/*if collaboration*/
-				if ( data.activity_id == 2){
-					Swal('Success', data.message, 'success');
-					$('#requestToCollaborate > svg').removeClass("text-black").addClass("text-blue-light");
-					$('#requestCollaborateStatus'),text('Requested for Collaboration');
-				}
-				/*if recommendation*/
 
-				else if (data.activity_id == 1){
-					Swal('Success', data.message, 'success');
-					$('#requestToCollaborate > svg').removeClass("text-black").addClass("text-blue-light");
-					$('#requestCollaborateStatus').text('Requested for Collaboration');
-				}
+/*
 
-			},
-			error : function (data, xhr,textStatus) {
-				if ( data.status === 500) {
-			// /alert("Internal Server Error");
-			Swal('500', 'Internal Server Error', 'error');
-		}
+else {
+// let newLikeCount = paperLikesCount + 1  ;
+$("em.likesCount").text(data.unlikeCount);
+$("#likeText").text("Like");
+$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
+}*/
 
-		else if ( data.status === 403){
-			// console.log(data);
-			let message = data.responseJSON.message ;
-			Swal('Forbidden', message, 'error');
+if ( data == 0 ) { 
+	console.log("Data attached:"+data.attached);
+	// issue a liked
+	$("em.likesCount").text(data.likesCount);
+	$("#likeText").text("Like").removeClass('font-bold');
+	$("a#likeButton > svg").removeClass('text-red').addClass("text-grey-darkest");	
+
+} 
+else {
+	$("em.likesCount").text(data.likesCount);
+	$("#likeText").text("Liked").addClass("font-bold");
+	$("a#likeButton > svg").removeClass('text-grey-darkest').addClass("text-red");	
+	console.log(data);
+}
+}).fail(function (data,xhr,textStatus){
+	if ( xhr.status = 500){
+		console.log("There's an error");
+	}
+	if ( xhr.status = 403){
+		var dataStats = data.status ; 
+		Swal('403',data.statusText,'warning');
+		console.log(data);
+	}
+}); 
+
+}
+
+
+function startActivity(requestData,activityId){
+
+	let uri = '{{ route('papers.activity', $paper->id) }}';	
+
+	$.ajax({
+
+		method : 'POST' ,
+		url : uri ,
+		data : {
+			requestData, 
+			activityId
+		},
+		success : function(data) {
+			console.log(data);
 			$.modal.close();
-		}
-	}
+
+			/*if collaboration*/
+			if ( data.activity_id == 2){
+				Swal('Success', data.message, 'success');
+				$('#requestToCollaborate > svg').removeClass("text-black").addClass("text-blue-light");
+				$('#requestCollaborateStatus'),text('Requested for Collaboration');
+			}
+			/*if recommendation*/
+
+			else if (data.activity_id == 1){
+				Swal('Success', data.message, 'success');
+				$('#requestToCollaborate > svg').removeClass("text-black").addClass("text-blue-light");
+				$('#requestCollaborateStatus').text('Requested for Collaboration');
+			}
+
+		},
+		error : function (data, xhr,textStatus) {
+			if ( data.status === 500) {
+// /alert("Internal Server Error");
+Swal('500', 'Internal Server Error', 'error');
+}
+
+else if ( data.status === 403){
+// console.log(data);
+let message = data.responseJSON.message ;
+Swal('Forbidden', message, 'error');
+$.modal.close();
+}
+}
 
 
 });
 
 
-	}
+}
 
-	function checkIfUserHasRequestedCollaboration(paper,uri,userId,activityId){
-		console.log(uri);
-		$.ajax({
-			method : 'GET' ,
-			url : uri ,
-			data : {  
-				activityId
-			}, 
-		}).done(function(data, status ,xhr) {
-			if ( data >= 1){
-				$("a#requestToCollaborate > svg").removeClass('text-grey-darkest').addClass("text-green");	
-				$("#requestCollaborateStatus").text("Requested for Collaboration");
-			}
-			console.log(data);
-		}).fail(function (xhr,textStatus){
-			console.log(xhr);
-		}); 
-	}
-
-	function checkIfUserHasRecommended(paper,uri,userId, activityId){
-
-		$.ajax({
-			method : 'GET' ,
-			url : uri ,
-			data : { 
-				activityId
-			}, 
-		}).done(function(data, status ,xhr) {
-			if ( data >= 1) {
-			// alert("add the like class");
-			$("a#recommendToPaper > svg").removeClass('text-grey-darkest').addClass("text-blue-dark");	
-			$("#recommendStatus").text("Recommended");
+function checkIfUserHasRequestedCollaboration(paper,uri,userId,activityId){
+	console.log(uri);
+	$.ajax({
+		method : 'GET' ,
+		url : uri ,
+		data : {  
+			activityId
+		}, 
+	}).done(function(data, status ,xhr) {
+		if ( data >= 1){
+			$("a#requestToCollaborate > svg").removeClass('text-grey-darkest').addClass("text-green");	
+			$("#requestCollaborateStatus").text("Requested for Collaboration");
 		}
-		else { 
-			console.log("not yet recommended");
-		}
+		console.log(data);
 	}).fail(function (xhr,textStatus){
-		if ( xhr.status === 500){
-			console.log("It's not allowed sir");
-		}
-		else if ( xhr.status == 403){
-			alert(xhr.responseText);
-		}
+		console.log(xhr);
 	}); 
+}
+
+function checkIfUserHasRecommended(paper,uri,userId, activityId){
+
+	$.ajax({
+		method : 'GET' ,
+		url : uri ,
+		data : { 
+			activityId
+		}, 
+	}).done(function(data, status ,xhr) {
+		if ( data >= 1) {
+// alert("add the like class");
+$("a#recommendToPaper > svg").removeClass('text-grey-darkest').addClass("text-blue-dark");	
+$("#recommendStatus").text("Recommended");
+}
+else { 
+	console.log("not yet recommended");
+}
+}).fail(function (xhr,textStatus){
+	if ( xhr.status === 500){
+		console.log("It's not allowed sir");
+	}
+	else if ( xhr.status == 403){
+		alert(xhr.responseText);
+	}
+}); 
 
 }
 
@@ -557,14 +568,11 @@ function recommendPaper(recData, uri){
 		data: { 
 			data: recData 
 		},
-	})
-	.done(function() {
+	}).done(function() {
 		console.log("success");
-	})
-	.fail(function() {
+	}).fail(function() {
 		console.log("error");
-	})
-	.always(function() {
+	}).always(function() {
 		console.log("complete");
 	});
 

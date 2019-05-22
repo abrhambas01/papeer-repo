@@ -16,7 +16,7 @@ class QueryBuilder {
 	{
 
 		return Contact::where('vip', true)->get()->map(function($contact){
-			$contact->formalName ="The exalted {$contact->first_name} of	the									{$contact->last_name}s";
+			$contact->formalName ="The exalted {$contact->first_name} of the {$contact->last_name}s";
 			return	$contact;				
 		}); 
 
@@ -24,10 +24,10 @@ class QueryBuilder {
 
 
 
-	public function ($value='')
+	public function contactAddresses($value='')
 	{
 		
-		$contacts = Contact::with(['addresses'=> function($query){
+		$contacts = Contact::with(['addresses' => function($query){
 			$query->where('mailable',	true); }
 		])->get();
 

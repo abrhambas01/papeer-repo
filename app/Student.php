@@ -20,6 +20,14 @@ class Student extends Model
 	{
 		// belongsTo(RelatedModel, foreignKey = user_id, keyOnRelatedModel = id)
 		return $this->belongsTo(User::class,'user_id','id');
+	}	
+
+
+	
+	public function papers()
+	{
+		// belongsTo(RelatedModel, foreignKey = user_id, keyOnRelatedModel = id)
+		return $this->hasMany(User::class,'user_id','id');
 	}
 
 }

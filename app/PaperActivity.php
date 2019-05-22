@@ -28,11 +28,11 @@ class PaperActivity extends Model
 	}	
 
 
-	public function papers()
-	{ 
-		return $this->belongsToMany(Paper::class,'paper_activities','activity_id','paper_id')
-		     		->withPivot('display_name','body','status');
-	}
+	// public function papers()
+	// { 
+	// 	return $this->belongsToMany(Paper::class,'paper_activities','activity_id','paper_id')
+	// 	     		->withPivot('display_name','body','status');
+	// }
 
 	/*has one person making the request....*/
 	public function creator()

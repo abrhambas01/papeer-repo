@@ -6,12 +6,12 @@ use App\Paper ;
 use App\PaperLike ; 
 use DB ; 
 use Carbon\Carbon ; 
-use App\utilities\PaperActivity ; 
+use App\Utilities\PaperActivities ; 
 
 class PapersActivityController extends Controller
-{
+{	
 
-	use PaperActivity ; 
+	use PaperActivities ; 
 
 	public function followPaper($paper)
 	{
@@ -64,7 +64,7 @@ class PapersActivityController extends Controller
 		$paperId = intval($paper);
 
 
-		if (auth()->check() == false) {
+		if (auth()->check() == false){
 			$errorMessage = "You cannot like this paper... please log-in, now";
 			abort(501, $errorMessage);
 		}
@@ -125,6 +125,7 @@ class PapersActivityController extends Controller
 		// if the one who likes the paper happens to be the owner then don't allow that to happen 
 			if ( $paperOwner == $userId ) {
 				$errorMessage = "You cannot like your own paper" ;
+				
 				return response($errorMessage,403 );
 			// abort(403,$errorMessage);
 			}
@@ -143,7 +144,7 @@ class PapersActivityController extends Controller
 
 					// dd("You can now start liking");
 
-					$likeStatus = PaperLike::create([
+				$likeStatus = PaperLike::create([
 						'user_id'  => $userId , 
 						'paper_id' => $paper ,
 						'liked_on' => $this->todaysTime() 

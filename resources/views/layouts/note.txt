@@ -1,0 +1,60 @@
+
+						// $paper->dump();
+						// $paper->each(function($item,$key){
+						// 	dump($item);
+						// });
+
+						// $activityType = $paper[1]->activityType ;
+						// dump($activityType);
+
+
+						// $activityTypeId   =  	    $paper->id ;
+						// $activityCreator  =		    $paper->pivot->display_name;
+						// $paperId          =         $paper->pivot->paper_id;
+						
+						// $route            =         `<a class="text-black" href="` . route('papers.show',$paperId) . `"></a>`;
+
+
+						// switch ($paperId) {
+
+						// 	case 1:
+						// 	$activityTypePhrase = $activityCreator ." Recommended to your paper " .$route  ;
+						// 	break;	
+
+						// 	case 2 :
+						// 	$activityTypePhrase = $activityCreator ." wants to collaborate with your paper".$route; 
+						// 	break;
+
+						// 	case 3:
+						// 	$activityTypePhrase = $activityCreator ." Liked your paper".$route ; 
+						// 	break;
+
+						// 	case 4 : 
+						// 	$activityTypePhrase = $activityCreator ."Followed" ."your paper".$route ; 
+						// 	break;
+
+						// 	case 5 : 
+						// 	$activityTypePhrase = "You've published the paper : " .$route ;
+						// 	break;
+
+						// 	default : 
+						// 	$activityTypePhrase = "That is an invalid activity"; 
+						// 	break ;
+
+						// } 
+
+
+						so for example this one :
+						```php
+						foreach ($spots['activityCreator'] as $activityCreator) {
+
+
+						$activityType = $spots['activityType']->map(function($item,$key){
+						// return $item->pluck('id') ;  
+						return $item->id ;
+						})->dump() ;
+
+						echo .$activityCreator->pivot->display_name ."made a {$activityType->on Spot Id  " .$activityCreator->pivot->place_id."<br/>" ; 
+
+						
+						}```

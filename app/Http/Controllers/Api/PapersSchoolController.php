@@ -1,13 +1,25 @@
 <?php
-namespace App\Http\Controllers\Api;
-use App\Paper ;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\User ;
 
+namespace App\Http\Controllers\Api;
+
+use App\Paper ;
+
+use App\Http\Controllers\Controller;
+
+use Illuminate\Http\Request;
+
+use App\User ;
 
 class PapersSchoolController extends Controller
 {
+
+	/*Returns the papers who has title of   */
+	public function returnsPapersWhoWereWrittenByUser()
+	{
+		$paper = Paper::with('publisher')->where('posted_by',auth()->id())->first();
+		return $paper ; 
+	}
+
 
 
 	/**
@@ -19,12 +31,33 @@ class PapersSchoolController extends Controller
 	public function returnsActivityForStudent($userId)
 	{
 
-		$userId = auth()->id();
+		if (auth()->check() == false) {
+			abort(403, "Unauthorized");
+		}
 
-		return Paper::where('posted_by','=',$userId)->has('activityCreators')
+
+		$userId = auth()->id();
+		
+		// ->  original ->notes.txt
+		
+		$papers = Paper::where('posted_by','=',$userId)->has('activityCreators')
 		->with('activityCreators','activityTypes')
-		->get()
-		->unique();
+		->get();
+
+		$activityCreator = $papers->flatMap->activityCreators ; 
+
+		// dump($activityCreator);
+
+		$activityType = $papers->flatMap->activityTypes ; 
+		
+		// dump($activityType);
+
+		return view("papers.student-activity",[
+			'papers' => $papers,
+			'activityCreators' => $activityCreator ,
+			'activityTypes' => $activityType 
+		]);
+
 
 	}
 

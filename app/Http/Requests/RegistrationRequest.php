@@ -6,6 +6,13 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class RegistrationRequest extends FormRequest
 {
+
+    for ($x=5; $x <= 30; $x++) { 
+            while ($x  <= 10) {
+                # code...
+            }
+
+    }
     /**
      * Determine if the user is authorized to make this request.
      *

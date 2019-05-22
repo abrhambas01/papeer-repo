@@ -20,6 +20,7 @@ class ActivityType extends Model
 		return $this->hasOne(PaperActivity::class,'activity_type_id','id');
 	}
 
+/*
 	public function papers()
 	{
     // belongsTo(RelatedModel, foreignKey = activities_id, keyOnRelatedModel = id)
@@ -32,7 +33,7 @@ class ActivityType extends Model
     // belongsTo(RelatedModel, foreignKey = activities_id, keyOnRelatedModel = id)
 		return $this->belongsToMany(User::class,'paper_activities','activity_type_id','creator_id');
 		
-	}
+	}*/
 
 
 

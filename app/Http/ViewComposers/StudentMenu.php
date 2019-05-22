@@ -12,9 +12,13 @@ class StudentMenu {
 		$user = auth()->id();
 
 		$papersOfTheUser = \App\Paper::where("posted_by",$user)->pluck('id'); // 7,10
-	// retrieving the activities for the specific papers of the logged on user...
-		$activitiesCount = \App\PaperActivity::whereIn("paper_id",$papersOfTheUser)->count();
 	
+
+		// retrieving the activities for the specific papers of the logged on user...
+		// $activitiesCount = \App\PaperActivity::whereIn("paper_id",$papersOfTheUser)->count();
+		$activitiesCount = 'static';
+
+
         $view->with(['activityCount' => $activitiesCount]);
 
 

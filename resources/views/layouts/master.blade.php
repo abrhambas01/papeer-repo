@@ -17,7 +17,7 @@
 <link href="{{ asset('css/sweetalert2.min.css') }}" rel="stylesheet">
 
 @yield("styles")
-
+	
 <script>
 	window.App = {!! json_encode([
 		'csrfToken' => csrf_token(),
@@ -42,6 +42,7 @@
 	<script src="{{ asset('js/sweetalert2.min.js') }}"></script>
 	<script src="{{ asset('js/trix.js') }}"></script>
 	<script src="{{ asset('js/scripts.js') }}"></script>
+	
 	@yield('scripts')
 	
 </body>

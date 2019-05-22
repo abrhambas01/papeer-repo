@@ -3,7 +3,7 @@
 use Illuminate\Foundation\Inspiring;
 
 use App\User ;
-use App\Console\Classes ; 
+use App\Console\Classes\DeleteEntries; 
 
 
 /*
@@ -36,15 +36,11 @@ Artisan::command("activities/student",function (){
 
 Artisan::command("activities/user",function (){
 	$this->info('Fetching activities for ..');
-	$user = User::first()->pluck('id') ;
+	$user = User::pluck('id')->first();
 	dd($user);
 })->describe('Fetching activities for a user..');
 
 Artisan::command("delete:papers --all",function (){
 	$this->info('Deleting table values ..');
-
-
-
-	
 })->describe('Deleting {table} values ..');
 

@@ -39,13 +39,37 @@ class TestingCollection extends Command
     public function handle()
     {
         // you can put your methods here..
-        $this->collect->returnsActivitiesForAStudent();
+        // $this->collect->returnsActivitiesForAStudent();
+        $this->testFlatMap();
+    }
+
+
+    /*testing flat map here..*/
+    public function testFlatMap()
+    {
+         $collection = \App\Paper::where("posted_by",'=',2)->has('activityCreators')
+         ->with(['activityCreators','activityTypes'])
+         ->get() ; 
+
+         print "Activity Type :" .dump($collection->flatMap->activityTypes->toArray())  ;
+
+         print "Creator :" .dump($collection->flatMap->activityCreators->toArray())  ;
+
+/*        
+        dump($collection);
+
+        $flattened = $collection->flatMap(function($data){
+            return array_map();
+        });  
+
+
+        dd($flattened->toArray());
+*/
     }
 
 
 
 
-    
 
 
 }

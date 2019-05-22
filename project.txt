@@ -5,6 +5,8 @@ this is papeer.com -> globalized paper-collaboration tool
 - let users post their thesis / research papers online / on site
 	- teachers, professors, research experts will make suggestions to the paper posted on site can 	    collaborate it right away.
 
+- we can add a social issue section in which users can submit 
+
 - Focus on the app's basic functionality in 1 week
 
 		

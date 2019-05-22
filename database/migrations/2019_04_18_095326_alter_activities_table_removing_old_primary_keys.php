@@ -20,7 +20,8 @@ class AlterActivitiesTableRemovingOldPrimaryKeys extends Migration
           $table->string('activity_type',50); //recommendation // collaboration // Like // follow //publish paper
 
       });  
-
+      
+      /*THis will be not usable*/
 
       Schema::create('paper_activities', function (Blueprint $table) {
                   // $table->dropPrimary('paper_activity');    

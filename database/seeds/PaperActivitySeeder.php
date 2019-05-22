@@ -67,13 +67,15 @@ class PaperActivitySeeder extends Seeder
             ]);
 
 
-            /*factory(PaperActivity::class,20)->create()->each(function ($u) use ($post){ 
-                $post->comments()->save(factory(Comment::class)->make([
-                    'user_id'   =>  $u->id 
-                ])); 
-            }); 
-*/
 
+  /*         
+        factory(PaperActivity::class,20)->create()->each(function ($u) use ($post){ 
+            $post->comments()->save(factory(Comment::class)->make([
+                'user_id'   =>  $u->id 
+            ])); 
+        }); 
+
+*/
 
 
 
@@ -95,16 +97,16 @@ class PaperActivitySeeder extends Seeder
      */
     public function updateActivitiesForStudents()
     {
-             $nonStudentUsers = \App\User::students()->pluck('id');
+         $nonStudentUsers = \App\User::students()->pluck('id');
 
                 // get all the id of the one's who published a paper
-             $papers = \App\Paper::select('posted_by','id')->get();
+         $papers = \App\Paper::select('posted_by','id')->get();
 
-                    dump("Users who posted".$papers);
+             dump("Users who posted".$papers);
 
-                     $papers->each(function($i,$key){
-                        dump($i);
-                    });
+             $papers->each(function($i,$key){
+                dump($i);
+            });
 
     }
 
