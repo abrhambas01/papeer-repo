@@ -1,4 +1,4 @@
-https://github.com/abrhambas01/papeer-repo.git## This is the startup repo
+> This is the startup repo
 
 ### Tools Used / Prerequisites
 
