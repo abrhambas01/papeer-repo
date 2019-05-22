@@ -10,3 +10,10 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .env
+es6.md
+notes.md
+project.txt
+/.phpintel
+/app/Http/Paper/query-builder.php
+/app/Console/Classes/IndexQuery.php
+/app/Console/Classes/TestCollection.php
