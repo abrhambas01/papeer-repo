@@ -40,7 +40,7 @@ $ php artisan key:generate
 3. laravel-valet(mac/win) / laragon(win) ( optional since you can use the built in php server)
 
 
-## These errors are commonly encountered while installing laravel apps. 
+## These errors are commonly encountered while cloning laravel apps. 
 
 
 > 1. 2 Whoops Errors visible after doing the above steps
