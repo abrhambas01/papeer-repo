@@ -46,7 +46,13 @@ $ php artisan key:generate
 > 1. 2 Whoops Errors visible after doing the above steps
 
 
+
+> also check out specs.md there I put the basic MVP features 
+
 ### Fix to issue #1
+
+
+
 
 change the .env.example file to .env only from the directory root and change it to your db credentials.. 
 
