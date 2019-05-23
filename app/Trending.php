@@ -2,11 +2,8 @@
 namespace App  ;
 
 use Illuminate\Support\Facades\Cache;
-
-
 	/*
-	we use this for caching.. or implementing cache.
-
+	I used this for caching.. or implementing cache. used for trending research papers..
 	*/
 class Trending { 
 
