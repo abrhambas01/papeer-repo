@@ -47,7 +47,7 @@ $ php artisan key:generate
 
 
 
-> also check out specs.md there I put the basic MVP features 
+*** also check out specs.md there I put the basic MVP features***
 
 ### Fix to issue #1
 
