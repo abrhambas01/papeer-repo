@@ -47,7 +47,7 @@ $ php artisan key:generate
 
 
 
-*** also check out specs.md there I put the basic MVP features***
+
 
 ### Fix to issue #1
 
@@ -67,4 +67,6 @@ $ php artisan key:generate && composer dump-autoload
 Run the project with php artisan serve from the terminal... or the pretty urls can also be used. like app.test or app.dev depending on your configuration.
 
 
+
+_also check out specs.md there I put the basic MVP features_
 
