@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 use Illuminate\Console\Command;
-use App\Console\Classes\TestCollection ; 
 
 class TestingCollection extends Command
 {
@@ -25,10 +24,9 @@ class TestingCollection extends Command
      *
      * @return void
      */
-    public function __construct(TestCollection $testcollect)
+    public function __construct()
     {
         parent::__construct();
-        $this->collect = $testcollect ; 
     }
 
     /**
