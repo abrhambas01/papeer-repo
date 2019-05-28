@@ -23,3 +23,9 @@
 - Papers get recommendations from research experts / scients.... worldwide
 - People can collaborate on finishing these research papers.. 
 
+
+### User Stories 
+
+1. For Example, A city has a nearby creek that's already smelling bad and a student creates a research on what could he do to solve the particular issue that plagues the neighborhood and he / she would write his findings about his initial research, then a guy who's expert at garbages from Netherlands will request to collaborate with his particular research once he find it really interesting
+
+2. An ex-researcher from a reputable research organization wants to publish up his previous researches and he wants it to be seen to the world(it might be open for collaboration or just show that it's already proven).. 
