@@ -6,10 +6,8 @@
 2. Mysql - server.. 
 3. Laravel - PHP Framework visit [Laravel Framework Website](https://laravel.com/).
 4. Laragon / Xampp / 
-5. Also make sure you have bash like terminal install git bash / cmder for this.
-5. Create an algolia account and put all the necessary credentials in the .env file..
-6. Setup also a mailtrap account. 
-7. NPM / Yarn 
+5. Also make sure you have bash like terminal install git bash / cmder for this for windows
+6. NPM / Yarn 
 
 ## Installation
 
@@ -21,8 +19,7 @@ $ cd papeer-repo && composer install && npm install
 $ php artisan key:generate
 ``` 
 
-2. Rename the .env.example to .env file with necessary credentials such as .. 
-
+2. Rename the .env.example to .env file with necessary credentials and fill the necessary information such as DB_DATABASE and DB_USERNAME and DB_PASSWORD depending upon your configuration.
 
 ## BUILT WITH 
 
@@ -46,11 +43,7 @@ $ php artisan key:generate
 > 1. 2 Whoops Errors visible after doing the above steps
 
 
-
-
-
 ### Fix to issue #1
-
 
 
 
